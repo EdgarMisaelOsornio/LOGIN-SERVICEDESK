@@ -1,0 +1,203 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/logo.jpeg">
+<title>SERVICE DESK</title>
+
+<style>
+    /* ----------- ESTILOS GENERALES ----------- */
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #222;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    /* ----------- NAVBAR ----------- */
+    .navbar {
+        background: #007bff;
+        color: white;
+        padding: 15px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .navbar a {
+        color: white;
+        margin-left: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    /* ----------- TARJETA DE BIENVENIDA ----------- */
+    .welcome {
+        max-width: 700px;
+        margin: 40px auto;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        text-align: center;
+    }
+
+    /* ----------- BOTONES ----------- */
+    .btn {
+        display: block;
+        width: 300px;
+        margin: 15px auto;
+        padding: 15px;
+        background-color: #007bff;
+        color: white;
+        font-size: 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.2s;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .icon {
+        margin-right: 10px;
+    }
+
+    /* ----------- FOOTER ----------- */
+    footer {
+        margin-top: 500px;
+        padding: 20px;
+        background: #222;
+        color: white;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    /* ----------- MODO OSCURO ----------- */
+    .dark-mode {
+        background: #121212;
+        color: #eee;
+    }
+
+    .dark-mode .navbar {
+        background: #333;
+    }
+
+    .dark-mode .welcome {
+        background: #1e1e1e;
+        color: #eee;
+    }
+
+    .dark-mode .btn {
+        background: #444;
+    }
+
+    .dark-mode .btn:hover {
+        background: #666;
+    }
+
+    .dark-mode footer {
+        background: #000;
+    }
+
+    .dark-toggle {
+        cursor: pointer;
+        padding: 6px 12px;
+        background: white;
+        color: #007bff;
+        font-weight: bold;
+        border-radius: 6px;
+    }
+</style>
+
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div><strong>SERVICE DESK</strong></div>
+
+        <div>
+            <a href="#">Inicio</a>
+            <a href="#">Ayuda</a>
+            <a href="#">Contacto</a>
+            <a href="../login.php">Perfil</a>
+            <a href="../logout.php">Cerrar sesión</a>
+
+            <span class="dark-toggle" onclick="toggleDarkMode()">🌙</span>
+        </div>
+    </div>
+
+    <!-- TARJETA DE BIENVENIDA -->
+    <div class="welcome">
+        <h2>Bienvenido al panel de herramientas del Service Desk</h2>
+        <p>Selecciona la herramienta que deseas utilizar.</p>
+    </div>
+
+    <!-- BOTONES PRINCIPALES -->
+    <a class="btn" href="./CLAVES_ETRANSPORTE/claves_etransporte.html">
+        <span class="icon">📦</span> CLAVES ETRANSPORTE
+    </a>
+
+    <a class="btn" href="./CLAVES_SEDENA/claves_sedena.html">
+        <span class="icon">🛡️</span> CLAVES SEDENA
+    </a>
+
+    <a class="btn" href="./VIDEOWALLS/videowalls.html">
+        <span class="icon">🖥️</span> VIDEOWALLS
+    </a>
+      
+    <a class="btn" href="./POLITICAS/politicas.html">
+    <span class="icon">⚖️</span> Politicas
+    </a>
+    <a class="btn" href="./HORARIOS/horarios.html">
+        <span class="icon">⏰</span> HORARIOS
+    </a>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2025 — Service Desk
+    </footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const darkMode = localStorage.getItem("darkMode");
+
+        if (darkMode === "enabled") {
+            document.body.classList.add("dark-mode");
+        }
+    });
+
+    // 2️⃣ Botón que activa/desactiva el modo oscuro
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+
+        // 3️⃣ Guardar la preferencia en el navegador
+        if (document.body.classList.contains("dark-mode")) {
+            localStorage.setItem("darkMode", "enabled");
+        } else {
+            localStorage.setItem("darkMode", "disabled");
+        }
+    }
+</script>
+
+</body>
+</html>
