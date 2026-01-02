@@ -6,8 +6,8 @@ export default function handler(req, res) {
   const { usuario, password } = req.body;
 
   const usuarios = {
-    admin: "123456",
-    soporte: "desk2025"
+    admin: "ceyinfadm",
+    informatica: "ceyinfadm"
   };
 
   if (usuarios[usuario] === password) {
@@ -16,3 +16,5 @@ export default function handler(req, res) {
     res.status(401).json({ error: "No autorizado" });
   }
 }
+
+
