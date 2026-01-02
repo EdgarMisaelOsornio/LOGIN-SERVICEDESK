@@ -1,7 +1,10 @@
 <script>
-if (!localStorage.getItem("auth")) {
-  window.location.href = "/login.html";
-}
+(async () => {
+  const res = await fetch("/api/auth");
+  if (!res.ok) {
+    window.location.href = "/login.html";
+  }
+})();
 </script>
 
 <!DOCTYPE html>
@@ -137,7 +140,9 @@ if (!localStorage.getItem("auth")) {
             <a href="#">Ayuda</a>
             <a href="#">Contacto</a>
             <a href="../login.html">Perfil</a>
-            <a href="../login.html">Cerrar sesión</a>
+            <a href="#" onclick="fetch('/api/logout').then(()=>location.href='/login.html')">
+  Cerrar sesión
+</a>
 
             <span class="dark-toggle" onclick="toggleDarkMode()">🌙</span>
         </div>
