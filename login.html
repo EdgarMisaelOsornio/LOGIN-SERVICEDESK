@@ -1,0 +1,27 @@
+<form id="loginForm">
+  <input type="text" id="usuario" placeholder="Usuario" required>
+  <input type="password" id="password" placeholder="Contraseña" required>
+  <button type="submit">Ingresar</button>
+</form>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const res = await fetch("/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      usuario: usuario.value,
+      password: password.value
+    })
+  });
+
+  if (res.ok) {
+    localStorage.setItem("auth", "true");
+    window.location.href = "/index.html";
+  } else {
+    alert("Acceso denegado");
+  }
+});
+</script>
