@@ -1,6 +1,31 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 export default function Dashboard() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  // 🔹 Cargar preferencia al iniciar
+  useEffect(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    if (savedMode === 'enabled') {
+      document.body.classList.add('dark-mode');
+      setDarkMode(true);
+    }
+  }, []);
+
+  // 🔹 Alternar modo oscuro
+  function toggleDarkMode() {
+    if (darkMode) {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('darkMode', 'disabled');
+    } else {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('darkMode', 'enabled');
+    }
+    setDarkMode(!darkMode);
+  }
+
   return (
     <>
       <style>{`
@@ -71,6 +96,7 @@ export default function Dashboard() {
           font-size: 14px;
         }
 
+        /* 🌙 DARK MODE */
         .dark-mode {
           background: #121212;
           color: #eee;
@@ -95,11 +121,12 @@ export default function Dashboard() {
 
         .dark-toggle {
           cursor: pointer;
-          padding: 6px 12px;
+          padding: 3px 8px;
           background: white;
           color: #007bff;
           font-weight: bold;
-          border-radius: 6px;
+          border-radius: 30px;
+          margin-left: 20px;
         }
       `}</style>
 
@@ -122,10 +149,7 @@ export default function Dashboard() {
             Cerrar sesión
           </a>
 
-          <span
-            className="dark-toggle"
-            onClick={() => document.body.classList.toggle('dark-mode')}
-          >
+          <span className="dark-toggle" onClick={toggleDarkMode}>
             🌙
           </span>
         </div>
