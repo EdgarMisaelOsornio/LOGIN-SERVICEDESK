@@ -142,7 +142,6 @@ export default function Dashboard() {
       <a className="btn" href="/CLAVES_SEDENA/claves_sedena.html">🛡️ CLAVES SEDENA</a>
       <a className="btn" href="/VIDEOWALLS/videowalls.html">🖥️ VIDEOWALLS</a>
       <a className="btn" href="/POLITICAS/politicas.html">⚖️ POLITICAS</a>
-      <a className="btn" href="/HORARIOS/horarios.html">⏰ HORARIOS</a>
 
       <footer>© 2025 — Service Desk</footer>
     </>
