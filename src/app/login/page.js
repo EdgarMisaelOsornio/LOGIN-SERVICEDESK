@@ -27,8 +27,8 @@ export default function Login() {
   return (
     <div style={styles.body}>
       <div style={styles.card}>
-        <h2>Service Desk</h2>
-        <p>Acceso al panel de herramientas</p>
+        <h2 style={styles.title}>Service Desk</h2>
+        <p style={styles.subtitle}>Acceso al panel de herramientas</p>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -62,7 +62,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontFamily: 'Segoe UI, Arial',
+    fontFamily: 'Segoe UI, Arial, sans-serif',
   },
   card: {
     background: '#fff',
@@ -71,6 +71,18 @@ const styles = {
     width: 380,
     textAlign: 'center',
     boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
+    color: '#222',
+    animation: 'fadeIn 0.6s ease',
+  },
+  title: {
+    marginBottom: 8,
+    fontSize: 26,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    marginBottom: 25,
+    color: '#666',
+    fontSize: 14,
   },
   input: {
     width: '100%',
@@ -79,6 +91,7 @@ const styles = {
     borderRadius: 8,
     border: '1px solid #ccc',
     fontSize: 15,
+    outline: 'none',
   },
   button: {
     width: '100%',
