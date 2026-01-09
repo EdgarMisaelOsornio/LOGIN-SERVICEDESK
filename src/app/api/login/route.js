@@ -5,8 +5,8 @@ export async function POST(req) {
 
   // 👉 USUARIOS (ejemplo)
   const usuarios = {
-    admin: '123456',
-    soporte: 'desk2025'
+    603487: 'Estrella#2026',
+    Estrella$26: 'Estrella$26'
   };
 
   if (!usuarios[usuario] || usuarios[usuario] !== password) {
