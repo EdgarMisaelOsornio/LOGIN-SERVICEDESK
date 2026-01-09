@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios</title>
+    <link rel="icon" type="image/png" href="/logo.jpeg">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            margin: 15px;
+            padding: 12px 20px;
+            background-color: #212529;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .card {
+            background: white;
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            text-align: center;
+            animation: fadeUp 0.8s ease;
+        }
+
+        .card img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .card img:hover {
+            transform: scale(1.03);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #modalHorario {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #modalHorario img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 15px;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #closeModal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); }
+            to { transform: scale(1); }
+        }
+    </style>
+</head>
+
+<body>
+
+ <button class="nav-btn" onclick="window.location.href='/dashboard'">
+  ⬅ Regresar al Inicio
+</button>
+
+<div class="card">
+    <h3>🕒 Horarios actuales del equipo</h3>
+    <p><strong>22/12/2025 — 04/01/2026</strong></p>
+
+    <img src="/HORARIOS/horario_actual.jpg"
+         alt="Horario actual"
+         onclick="openHorario(this.src)">
+
+    <p style="font-size:14px;">🔍 Click en la imagen para verla en grande</p>
+</div>
+
+<div class="card">
+    <h3>📅 Próximos horarios del equipo</h3>
+    <p><strong>04/01/2026 — 17/01/2026</strong></p>
+
+    <img src="/HORARIOS/horario_proximo.jpg"
+         alt="Próximo horario"
+         onclick="openHorario(this.src)">
+
+    <p style="font-size:14px;">🔍 Click en la imagen para verla en grande</p>
+</div>
+
+<div id="modalHorario" onclick="closeHorario()">
+    <span id="closeModal">✖</span>
+    <img id="imgHorario" alt="Horario ampliado">
+</div>
+
+<script>
+function openHorario(src) {
+    const modal = document.getElementById('modalHorario');
+    const img = document.getElementById('imgHorario');
+    img.src = src;
+    modal.style.display = 'flex';
+}
+
+function closeHorario() {
+    document.getElementById('modalHorario').style.display = 'none';
+}
+
+// Cerrar con tecla ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") {
+        closeHorario();
+    }
+});
+</script>
+
+</body>
+</html>

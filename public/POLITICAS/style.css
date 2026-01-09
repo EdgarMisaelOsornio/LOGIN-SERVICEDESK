@@ -1,0 +1,231 @@
+:root{
+  --ink:#111827;
+  --line:#111827;
+  --bg:#f4f6fb;
+}
+
+/* ===== APP ===== */
+body{
+  margin:0;
+  background:var(--bg);
+  font-family: Tahoma, sans-serif;
+  color:var(--ink);
+}
+
+.wrap{
+  max-width:1200px;
+  margin:18px auto;
+  display:grid;
+  grid-template-columns:420px 1fr;
+  gap:14px;
+  padding:0 14px;
+}
+
+.panel,.doc{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  box-shadow:0 10px 26px rgba(0,0,0,.06);
+}
+
+.panel{padding:14px}
+.panel h2{
+  margin:0 0 10px;
+  font-size:16px;
+}
+
+.hint{
+  font-size:12px;
+  color:#6b7280;
+  margin-top:10px;
+}
+
+.btnsTop{
+  display:flex;
+  gap:10px;
+  margin:10px 0 12px;
+  justify-content:flex-end;
+}
+
+button{
+  border:none;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.primary{background:#1f4fd6;color:#fff}
+.ghost{background:#eef3ff;color:#1f4fd6}
+.danger{background:#ffecec;color:#b42318}
+
+/* ===== FORMULARIOS ===== */
+.forms{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-height: calc(100vh - 170px);
+  overflow:auto;
+}
+
+label{
+  font-size:12px;
+  margin:8px 0 4px;
+}
+
+input, select{
+  width:100%;
+  padding:8px;
+  font-size:13px;
+}
+
+/* ===== DOCUMENTO ===== */
+.doc{padding:14px}
+
+/* ===== HOJA TIPO WORD (CARTA REAL + MÁRGENES WORD) ===== */
+.sheet{
+  width: 816px;          /* 21.59 cm */
+  min-height: 1056px;    /* 27.94 cm */
+  margin: 0 auto;
+  box-sizing: border-box;
+  background:#fff;
+
+  /* Márgenes exactos de Word */
+  padding-top: 48px;     /* 1.27 cm */
+  padding-bottom: 24px;  /* 0.63 cm */
+  padding-left: 113px;   /* 3 cm */
+  padding-right: 113px;  /* 3 cm */
+}
+
+.top-title{
+  text-align:center;
+  font-weight:700;
+  font-size:14pt;
+}
+
+.title-line{
+  border-top:2px solid var(--line);
+  width:75%;
+  margin:8px auto 0;
+}
+
+.meta-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:16px;
+  font-size:9pt;
+}
+
+.body{
+  margin-top:16px;
+  font-size:9pt;
+  line-height:1.35;
+}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin:10px 0;
+  font-size:8pt;
+}
+
+.table th,
+.table td{
+  border:1px solid var(--line);
+  padding:4px;
+}
+
+.sign-block{
+  text-align:center;
+  margin-top:28px;
+}
+
+/* ===== POLÍTICAS (TEXTO LEGAL) ===== */
+.pol-title{
+  text-align:center;
+  font-weight:bold;
+  font-size:8.5pt;
+  margin:10px 0 6px;
+}
+
+.pol-text{
+  font-family: Tahoma, sans-serif;
+  font-size:7pt;
+  line-height:1.45;
+  text-align:justify;
+}
+
+.pol-text br{
+  display:block;
+  content:"";
+  margin-top:4px;
+}
+
+.footer-line{
+  margin:20px auto 6px;
+  border-top:1px solid #111;
+  width:55%;
+  margin-top: 58px;
+}
+
+.footer-note{
+  text-align:center;
+  font-size:8pt;
+  font-weight:bold;
+  margin-top: 14px;   /* espacio desde el texto anterior */
+}
+
+/* ===== BOTÓN REGRESAR ===== */
+.nav-btn{
+  margin:10px;
+  padding:10px 16px;
+  background:#212529;
+  color:#fff;
+  border-radius:8px;
+  cursor:pointer;
+}
+.nav-btn:hover {
+            background-color: #0056b3;
+        }
+
+/* ===== IMPRESIÓN (CORREGIDO) ===== */
+@page{
+  size: letter;
+  margin:0; /* ⬅️ CLAVE: elimina borde fantasma */
+}
+
+@media print{
+  body{
+    background:#fff;
+    margin:0;
+  }
+
+  .wrap,
+  .doc{
+    margin:0;
+    padding:0;
+    border:none;
+    box-shadow:none;
+  }
+
+  .panel,
+  .nav-btn{
+    display:none;
+  }
+
+  .sheet{
+    width:816px;
+    margin:0;
+    border:none !important;
+    box-shadow:none !important;
+    page-break-after:always;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+span[id^="out-solicitante-"] {
+  font-weight: bold;
+}
