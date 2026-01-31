@@ -68,7 +68,8 @@ const base = [
   ["ZIHS0","ZIHUATANEJO SALA 1","MAGIC"],
   ["SJLS0","SAN JUAN DE LOS LAGOS SALA UNICA","MAX"],
   ["QUERETARO CONEXION","QUERETARO SALA CONEXION","TECNOMANIA"],
-  ["TAXQUEÑA","TAXQUEÑA SALA UNICA","TECNOMANIA"]
+  ["TAXQUEÑA","TAXQUEÑA SALA UNICA","TECNOMANIA"],
+  ["QUERETARO VIP","QUERETARO TAQUILLA VIP","MANTENIMIENTO CENTRAL"]
 ];
 
 // --- UTILIDADES ---
@@ -127,8 +128,24 @@ function buscarPorNombre(){
   const LINE_SPLIT = raw.replace(/\r/g,"").split("\n");
 
   // Normalizar entradas y filtrar vacíos
-  const entradas = LINE_SPLIT.map(l => ({ original: l.trim(), normalizada: normalizar(l) }))
-                            .filter(e => e.normalizada && e.normalizada.trim() !== "");
+  const mapaUnicos = new Map();
+
+LINE_SPLIT.forEach(l => {
+  const original = l.trim();
+  const normalizada = normalizar(l);
+
+  if (!normalizada) return;
+
+  // si ya existe, no lo volvemos a agregar
+  if (!mapaUnicos.has(normalizada)) {
+    mapaUnicos.set(normalizada, {
+      original,
+      normalizada
+    });
+  }
+});
+
+const entradas = Array.from(mapaUnicos.values());
 
   const totalEntradas = entradas.length;
   if(totalEntradas === 0){
@@ -365,5 +382,5 @@ function descargarZip(){
     zip.folder(proveedor).file(archivo.name, archivo);
   });
   zip.generateAsync({type:"blob"}).then(c=>saveAs(c,"Archivos_Videowalls.zip"));
-  zip.generateAsync({type:"blob"}).then(c=>saveAs(c,"Archivos_Videowalls.zip"));
+  
 }

@@ -9,7 +9,8 @@ const OUTPUT_HEADERS = [
   'Descripción',
   'Oficina',
   'Nomenclatura',
-  'Usuario Citas'
+  'Usuario Citas',
+  'Usuario GN'
 ];
 
 const OUTPUT_IDS = [
@@ -19,7 +20,8 @@ const OUTPUT_IDS = [
   'outDesc',
   'outOffice',
   'outNomen',
-  'outCitasUser'
+  'outCitasUser',
+  'outGNUser'
 ];
 
 let officeData = [];
@@ -191,6 +193,11 @@ function generateCitasUser(curp, nomen) {
   return nomen + curp.substring(0, 4) + "ISF";
 }
 
+function generateGNUser(curp, nomen, office) {
+  const letraCurp = curp.substring(0, 1);
+  return nomen + office + letraCurp + "GN";
+}
+
 function validateInputs(curp, name, officeValue, selectedOption) {
   if (!curp || curp.length !== 18 || !CURP_REGEX.test(curp)) {
     setStatus("ERROR: CURP inválida.");
@@ -228,6 +235,7 @@ function generateKeys() {
   const userCorp = generateCorporateUser(curp, nomen, office);
   const password = generatePassword(curp);
   const userCitas = generateCitasUser(curp, nomen);
+  const userGN = generateGNUser(curp, nomen, office);
 
   $('outUser').textContent = userCorp;
   $('outPass').textContent = password;
@@ -236,6 +244,7 @@ function generateKeys() {
   $('outOffice').textContent = office;
   $('outNomen').textContent = nomen;
   $('outCitasUser').textContent = userCitas;
+  $('outGNUser').textContent = userGN;
 
   outputArea.hidden = false;
   setStatus("¡Claves generadas!", "success");

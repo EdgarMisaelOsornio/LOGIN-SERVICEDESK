@@ -3,7 +3,14 @@ import { NextResponse } from 'next/server';
 export function middleware(req) {
   const auth = req.cookies.get('auth');
 
-  const protectedRoutes = ['/dashboard'];
+  // 1. Agregamos las nuevas rutas a la lista de protección
+  const protectedRoutes = [
+    '/dashboard',
+    '/CLAVES_ETRANSPORTE',
+    '/CLAVES_SEDENA',
+    '/VIDEOWALLS',
+    '/POLITICAS'
+  ];
 
   if (protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))) {
     if (!auth) {
@@ -14,6 +21,13 @@ export function middleware(req) {
   return NextResponse.next();
 }
 
+// 2. IMPORTANTE: Debes actualizar el matcher para que incluya las carpetas
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: [
+    '/dashboard/:path*',
+    '/CLAVES_ETRANSPORTE/:path*',
+    '/CLAVES_SEDENA/:path*',
+    '/VIDEOWALLS/:path*',
+    '/POLITICAS/:path*',
+  ],
 };

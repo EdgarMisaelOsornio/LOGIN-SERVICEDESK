@@ -37,32 +37,73 @@ function createFormCard(id){
       <select id="in-sistema-${id}" onchange="syncPage(${id})">
         <option value="E-TRANSPORTE">E-TRANSPORTE</option>
         <option value="AS400">AS400</option>
-        <option value="CAD">CAD</option>
         <option value="TPAK">TPAK</option>
+        <option value="CAD">CAD</option>
+        <option value="DORMITORIOS">DORMITORIOS</option>
+        <option value="CHATBOT RH">CHATBOT RH</option>
+        <option value="NUTRICION">NUTRICION</option>
         <option value="CUENTAS CORPORATIVAS">CUENTAS CORPORATIVAS</option>
       </select>
 
       <label>Nombre</label>
       <input id="in-nombre-${id}" oninput="syncPage(${id})">
 
-      <!-- Usuario normal -->
       <div id="usuario-normal-${id}">
         <label>Usuario</label>
         <input id="in-usuario-${id}" oninput="syncPage(${id})">
       </div>
 
-      <!-- Usuarios cuentas corporativas -->
-      <div id="usuarios-corporativos-${id}" style="display:none;">
-        <label>Usuario Comisión</label>
-        <input id="in-usuario-comision-${id}" oninput="syncPage(${id})">
+      <div id="usuarios-corporativos-${id}" class="usuarios-corp-box" style="display:none;">
+          <div class="corp-header">
+            <input type="checkbox" id="check-misma-pass-${id}" onchange="syncPage(${id})" checked>
+            <label class="check-label">Usar la misma contraseña para las 3</label>
+          </div>
 
-        <label>Usuario Citas Médicas</label>
-        <input id="in-usuario-citas-${id}" oninput="syncPage(${id})">
+          <div id="row-input-comision-${id}">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label>Usuario Comisión</label>
+                <button class="mini danger" onclick="toggleCorpRow(${id}, 'comision', false)">✕ Quitar</button>
+              </div>
+              <input id="in-usuario-comision-${id}" oninput="syncPage(${id})">
+              <div id="wrapper-pass-com-${id}" style="display:none;">
+                <label>Pass Comisión</label>
+                <input id="in-pass-comision-${id}" oninput="syncPage(${id})">
+              </div>
+          </div>
+          <button id="btn-add-comision-${id}" class="mini ghost" style="display:none; margin-bottom:10px;" onclick="toggleCorpRow(${id}, 'comision', true)">+ Agregar Comisión</button>
+
+          <div id="row-input-citas-${id}">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label>Usuario Citas Médicas</label>
+                <button class="mini danger" onclick="toggleCorpRow(${id}, 'citas', false)">✕ Quitar</button>
+              </div>
+              <input id="in-usuario-citas-${id}" oninput="syncPage(${id})">
+              <div id="wrapper-pass-citas-${id}" style="display:none;">
+                <label>Pass Citas Médicas</label>
+                <input id="in-pass-citas-${id}" oninput="syncPage(${id})">
+              </div>
+          </div>
+          <button id="btn-add-citas-${id}" class="mini ghost" style="display:none; margin-bottom:10px;" onclick="toggleCorpRow(${id}, 'citas', true)">+ Agregar Citas Médicas</button>
+
+          <div id="row-input-gn-${id}">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label>Usuario Comisión GN</label>
+                <button class="mini danger" onclick="toggleCorpRow(${id}, 'gn', false)">✕ Quitar</button>
+              </div>
+              <input id="in-usuario-comision-gn-${id}" oninput="syncPage(${id})">
+              <div id="wrapper-pass-gn-${id}" style="display:none;">
+                <label>Pass Comisión GN</label>
+                <input id="in-pass-comision-gn-${id}" oninput="syncPage(${id})">
+              </div>
+          </div>
+          <button id="btn-add-gn-${id}" class="mini ghost" style="display:none;" onclick="toggleCorpRow(${id}, 'gn', true)">+ Agregar Comisión GN</button>
       </div>
 
-      <label>Contraseña</label>
-      <input id="in-contrasena-${id}" oninput="syncPage(${id})">
-    </div>
+        <div id="wrapper-pass-general-${id}">
+        <label>Contraseña <span id="label-pass-type-${id}"></span></label>
+          <input id="in-contrasena-${id}" oninput="syncPage(${id})">
+        </div>
+      </div>
   `;
 }
 
@@ -146,7 +187,6 @@ function createSheet(id){
           le proporcionamos la siguiente información:
         </div>
 
-        <!-- Tabla normal -->
         <table class="table normal-table" id="normal-table-${id}" style="display:none;">
           <thead>
             <tr>
@@ -166,34 +206,40 @@ function createSheet(id){
           </tbody>
         </table>
 
-        <!-- Tabla cuentas corporativas -->
-        <table class="table cuentas-table" id="cuentas-table-${id}" style="display:none;">
-          <thead>
-            <tr>
-              <th style="width:40%">NOMBRE</th>
-              <th>TIPO</th>
-              <th style="width:20%">USUARIO</th>
-              <th style="width:20%">CONTRASEÑA</th>
-              <th style="width:20%">FIRMA</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="out-nombre" style="text-align:left;padding-left:8px;"></td>
-              <td>COMISIÓN</td>
-              <td class="out-usuario-comision"></td>
-              <td class="out-contrasena"></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td class="out-nombre"></td>
-              <td>CITAS MÉDICAS</td>
-              <td class="out-usuario-citas"></td>
-              <td class="out-contrasena"></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+      <table class="table cuentas-table" id="cuentas-table-${id}" style="display:none;">
+        <thead>
+          <tr>
+            <th style="width:40%">NOMBRE</th>
+            <th>TIPO</th>
+            <th style="width:20%">USUARIO</th>
+            <th style="width:20%">CONTRASEÑA</th>
+            <th style="width:20%">FIRMA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="sheet-row-comision-${id}">
+            <td class="out-nombre" style="text-align:left;padding-left:8px;"></td>
+            <td>COMISIÓN</td>
+            <td class="out-usuario-comision"></td>
+            <td class="out-pass-comision"></td> 
+            <td></td>
+          </tr>
+          <tr id="sheet-row-citas-${id}">
+            <td class="out-nombre"></td>
+            <td>CITAS MÉDICAS</td>
+            <td class="out-usuario-citas"></td>
+            <td class="out-pass-citas"></td> 
+            <td></td>
+          </tr>
+          <tr id="sheet-row-gn-${id}">
+            <td class="out-nombre"></td>
+            <td>COMISIÓN GN</td>
+            <td class="out-usuario-comision-gn"></td>
+            <td class="out-pass-gn"></td> 
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
 
         ${politicasHTML()}
 
@@ -221,6 +267,13 @@ function addPage(prefill = null){
   $("in-usuario-"+id).value = prefill?.usuario ?? "";
   $("in-usuario-comision-"+id).value = prefill?.usuarioComision ?? "";
   $("in-usuario-citas-"+id).value = prefill?.usuarioCitas ?? "";
+  $("in-usuario-comision-gn-"+id).value = prefill?.usuarioComisionGN ?? "";
+  
+  // Rellenar las nuevas contraseñas si existen (al duplicar)
+  $("in-pass-comision-"+id).value = prefill?.passComision ?? "";
+  $("in-pass-citas-"+id).value = prefill?.passCitas ?? "";
+  $("in-pass-comision-gn-"+id).value = prefill?.passGN ?? "";
+  
   $("in-contrasena-"+id).value = prefill?.contrasena ?? "";
 
   syncPage(id);
@@ -228,43 +281,68 @@ function addPage(prefill = null){
 
 function syncPage(id){
   const sistema = $("in-sistema-"+id)?.value || "E-TRANSPORTE";
+  const mismaPass = $("check-misma-pass-"+id)?.checked;
 
   const nombre = $("in-nombre-"+id)?.value ?? "";
   const usuarioNormal = $("in-usuario-"+id)?.value ?? "";
   const usuarioComision = $("in-usuario-comision-"+id)?.value ?? "";
   const usuarioCitas = $("in-usuario-citas-"+id)?.value ?? "";
-  const contrasena = $("in-contrasena-"+id)?.value ?? "";
+  const usuarioComisionGN = $("in-usuario-comision-gn-"+id)?.value ?? "";
+  
+  const passGeneral = $("in-contrasena-"+id)?.value ?? "";
+  const passComision = mismaPass ? passGeneral : ($("in-pass-comision-"+id)?.value ?? "");
+  const passCitas = mismaPass ? passGeneral : ($("in-pass-citas-"+id)?.value ?? "");
+  const passGN = mismaPass ? passGeneral : ($("in-pass-comision-gn-"+id)?.value ?? "");
 
+  // Sincronización básica de la hoja
   $("out-solicitante-"+id).textContent = $("in-solicitante-"+id)?.value ?? "";
   $("out-ticket-"+id).textContent = $("in-ticket-"+id)?.value ?? "";
   $("out-sistema-"+id).textContent = sistema;
   $("out-fecha-"+id).textContent = fechaActual();
+  document.querySelectorAll(`#sheet-${id} .out-nombre`).forEach(el => el.textContent = nombre);
 
-  document.querySelectorAll(`#sheet-${id} .out-nombre`)
-    .forEach(el => el.textContent = nombre);
-
-  document.querySelectorAll(`#sheet-${id} .out-contrasena`)
-    .forEach(el => el.textContent = contrasena);
-
-  if(sistema === "CUENTAS CORPORATIVAS"){
+  if(sistema === "CUENTAS CORPORATIVAS") {
+    $("usuarios-corporativos-"+id).style.display = "block";
+    $("usuario-normal-"+id).style.display = "none";
     $("normal-table-"+id).style.display = "none";
     $("cuentas-table-"+id).style.display = "table";
-    $("usuario-normal-"+id).style.display = "none";
-    $("usuarios-corporativos-"+id).style.display = "block";
+    
+    if(mismaPass) {
+      // Muestra el campo general, oculta los individuales
+      $("wrapper-pass-com-"+id).style.display = "none";
+      $("wrapper-pass-citas-"+id).style.display = "none";
+      $("wrapper-pass-gn-"+id).style.display = "none";
+      $("wrapper-pass-general-"+id).style.display = "block"; 
+      $("label-pass-type-"+id).textContent = "(Misma para las 3)";
+    } else {
+      // Oculta el campo general, muestra los 3 individuales
+      $("wrapper-pass-com-"+id).style.display = "block";
+      $("wrapper-pass-citas-"+id).style.display = "block";
+      $("wrapper-pass-gn-"+id).style.display = "block";
+      $("wrapper-pass-general-"+id).style.display = "none"; // ESTO CORRIGE TU PROBLEMA
+    }
 
-    document.querySelectorAll(`#sheet-${id} .out-usuario-comision`)
-      .forEach(el => el.textContent = usuarioComision);
+    // Sincronizar tabla de la hoja
+    document.querySelector(`#sheet-${id} .out-usuario-comision`).textContent = usuarioComision;
+    document.querySelector(`#sheet-${id} .out-usuario-citas`).textContent = usuarioCitas;
+    document.querySelector(`#sheet-${id} .out-usuario-comision-gn`).textContent = usuarioComisionGN;
+    
+    const tablaCorpRows = document.querySelectorAll(`#cuentas-table-${id} tbody tr`);
+    tablaCorpRows[0].querySelector("td:nth-child(4)").textContent = passComision;
+    tablaCorpRows[1].querySelector("td:nth-child(4)").textContent = passCitas;
+    tablaCorpRows[2].querySelector("td:nth-child(4)").textContent = passGN;
 
-    document.querySelectorAll(`#sheet-${id} .out-usuario-citas`)
-      .forEach(el => el.textContent = usuarioCitas);
   } else {
+    // Modo para sistemas normales
+    $("usuarios-corporativos-"+id).style.display = "none";
+    $("usuario-normal-"+id).style.display = "block";
     $("normal-table-"+id).style.display = "table";
     $("cuentas-table-"+id).style.display = "none";
-    $("usuario-normal-"+id).style.display = "block";
-    $("usuarios-corporativos-"+id).style.display = "none";
+    $("wrapper-pass-general-"+id).style.display = "block"; // Siempre visible en sistemas normales
+    $("label-pass-type-"+id).textContent = "";
 
-    document.querySelectorAll(`#sheet-${id} .out-usuario`)
-      .forEach(el => el.textContent = usuarioNormal);
+    document.querySelectorAll(`#sheet-${id} .out-usuario`).forEach(el => el.textContent = usuarioNormal);
+    document.querySelectorAll(`#sheet-${id} .out-contrasena`).forEach(el => el.textContent = passGeneral);
   }
 }
 
@@ -282,6 +360,11 @@ function duplicatePage(id){
     usuario: $("in-usuario-"+id)?.value,
     usuarioComision: $("in-usuario-comision-"+id)?.value,
     usuarioCitas: $("in-usuario-citas-"+id)?.value,
+    usuarioComisionGN: $("in-usuario-comision-gn-"+id)?.value,
+    // Nuevos campos de contraseña individual
+    passComision: $("in-pass-comision-"+id)?.value,
+    passCitas: $("in-pass-citas-"+id)?.value,
+    passGN: $("in-pass-comision-gn-"+id)?.value,
     contrasena: $("in-contrasena-"+id)?.value
   });
 }
@@ -295,13 +378,28 @@ function clearAll(){
 }
 
 function printDoc(){
+  // Sincroniza todas las hojas existentes
   for(let id=1; id<=pageCount; id++){
     if($("sheet-"+id)) syncPage(id);
   }
 
-  const sistema = $("in-sistema-1")?.value || "SISTEMA";
-  const usuario = $("in-nombre-1")?.value || "NOMBRE";
-  const ticket = $("in-ticket-1")?.value || "TICKET";
+  // 🔑 buscar la PRIMER hoja que exista
+  let firstValidId = null;
+  for(let id=1; id<=pageCount; id++){
+    if($("sheet-"+id)){
+      firstValidId = id;
+      break;
+    }
+  }
+
+  if(!firstValidId){
+    alert("No hay hojas para imprimir");
+    return;
+  }
+
+  const sistema = $("in-sistema-"+firstValidId)?.value || "SISTEMA";
+  const usuario = $("in-nombre-"+firstValidId)?.value || "NOMBRE";
+  const ticket = $("in-ticket-"+firstValidId)?.value || "TICKET";
 
   const safe = str => str.replace(/[\\/:*?"<>|]/g, "").trim();
   document.title = `${safe(sistema)} ${safe(usuario)} Ticket#${safe(ticket)}`;
@@ -311,3 +409,46 @@ function printDoc(){
 
 /* Inicial */
 addPage();
+
+function toggleTheme() {
+  const body = document.body;
+  const btn = document.getElementById('btnTheme');
+  
+  body.classList.toggle('dark-mode');
+  
+  if (body.classList.contains('dark-mode')) {
+    btn.innerText = "☀️ Modo Claro";
+    localStorage.setItem('theme', 'dark');
+  } else {
+    btn.innerText = "🌙 Modo Oscuro";
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+// Añade esto para cargar el tema al abrir la página
+window.onload = () => {
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    document.getElementById('btnTheme').innerText = "☀️ Modo Claro";
+  }
+};
+
+function toggleCorpRow(id, type, show) {
+  const rowInput = $(`row-input-${type}-${id}`);
+  const btnAdd = $(`btn-add-${type}-${id}`);
+  const sheetRow = $(`sheet-row-${type}-${id}`);
+
+  if (show) {
+    rowInput.style.display = "block";
+    btnAdd.style.display = "none";
+    if (sheetRow) sheetRow.style.display = "table-row";
+  } else {
+    rowInput.style.display = "none";
+    btnAdd.style.display = "block";
+    if (sheetRow) sheetRow.style.display = "none";
+    
+    // Limpiamos los inputs al quitar la fila para que no se filtren datos
+    $(`in-usuario-${type === 'gn' ? 'comision-gn' : (type === 'comision' ? 'comision' : 'citas')}-${id}`).value = "";
+  }
+  syncPage(id);
+}
